@@ -15,6 +15,9 @@ def plot_point_cloud(data, line_data):
 
     plt.scatter(x_1, x_2, color=colors_y)
     plt.plot(line_data[0], line_data[1])
+    plt.xlabel('$x_1$')
+    plt.ylabel('$x_2$')
+    plt.legend(['Data', 'Separator'])
     plt.show()
 
 def compute_line(w, b):
