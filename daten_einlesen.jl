@@ -9,4 +9,4 @@ function read_points(filename::String)
     return data
 end
 
-#data=readdlm("/Users/Hannah/Desktop/Coma_Python_Ha/Coma_II/Programmierprojekt/Beispiel_1.rtf")
+#data=readdlm("/Users/Hannah/Desktop/Coma_Python_Ha/Coma_II/Beispiel.txt")
