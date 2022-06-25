@@ -1,8 +1,21 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def read_points(filename: str):
     """Liest den Input einer Datei ein"""
-    pass
+    return np.loadtxt(filename, delimiter=" ")
+
+def plot_point_cloud(data, line_data):
+    """Erstellt einen Plot basierend auf den eingelesen Daten `data` und den zwei Punkten, die die SVM darstellen."""
+    x_1 = data[:, 0]
+    x_2 = data[:, 1]
+    y = data[:,2].astype(int).flatten()
+    colors = ['b', 'r', 'g']
+    colors_y = [colors[i] for i in y]
+
+    plt.scatter(x_1, x_2, color=colors_y)
+    plt.plot(line_data[0], line_data[1])
+    plt.show()
 
 def compute_line(w, b):
     """Bestimmt fuer eine gegeben Geradengleichung zwei Punkte, um die Gerade darstellen zu koennen."""
@@ -20,6 +33,8 @@ def compute_line(w, b):
     return x, y
 
 if __name__ == "__main__":
+    print(read_points("./Beispiel_1.rtf"))
+
     w = np.array([1,0])
     b = 0
     print(compute_line(w, b))
