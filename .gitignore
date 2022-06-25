@@ -25,3 +25,7 @@ Manifest.toml
 
 # Python environment
 .venv/
+
+# Jupyter notebook
+.ipynb_checkpoints/
+__pycache__/
