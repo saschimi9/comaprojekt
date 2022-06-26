@@ -35,23 +35,5 @@ function quadratic_program(X::Matrix)
   println(sol,val)
 end
 
-# k = 4
-# T = Float64
-# X = [1. 1. 1 ; 2. 2. 1 ; 2. 1. -1 ; 3. 2. -1]
-# y = X[:,3]'
-# A = zeros(k,k)
-# for i in 1:k
-#   A[i,:] = y
-# end
-# b = vec(zeros(k,1))
-# C = -Matrix{T}(I,k,k)
-# d = vec(zeros(k,1))
-# z = vec(ones(T,k,1))
-# P = Matrix{T}(I,k,k)
-
-# qp = QPDAS.QuadraticProgram(A,b,C,d,z,P)
-# sol,val = solve!(qp)
-# println(sol,val)
-
 X = [1. 1. 1 ; 2. 2. 1 ; 2. 1. -1 ; 3. 2. -1]
 quadratic_program(X)
