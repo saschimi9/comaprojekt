@@ -1,15 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def read_points(filename: str):
     """Liest den Input einer Datei ein"""
     return np.loadtxt(filename, delimiter=" ")
+
 
 def plot_point_cloud(data, line_data):
     """Erstellt einen Plot basierend auf den eingelesen Daten `data` und den zwei Punkten, die die SVM darstellen."""
     x_1 = data[:, 0]
     x_2 = data[:, 1]
-    y = data[:,2].astype(int).flatten()
+    y = data[:, 2].astype(int).flatten()
     colors = ['b', 'r', 'g']
     colors_y = [colors[i] for i in y]
 
@@ -20,32 +22,34 @@ def plot_point_cloud(data, line_data):
     plt.legend(['Data', 'Separator'])
     plt.show()
 
+
 def compute_line(w, b):
     """Bestimmt fuer eine gegeben Geradengleichung zwei Punkte, um die Gerade darstellen zu koennen."""
     if w[0] != 0 and w[1] != 0:
-        x = np.linspace(0,5, 2)
+        x = np.linspace(0, 5, 2)
         y = (b - w[0]*x)/w[1]
     elif w[0] != 0:
-        y = np.linspace(0,5, 2)
+        y = np.linspace(0, 5, 2)
         x = (b - w[1]*y)/w[0]
     elif w[1] != 0:
-        x = np.linspace(0,5, 2)
+        x = np.linspace(0, 5, 2)
         y = (b - w[0]*x)/w[1]
     else:
         raise Exception("Zero vector!")
     return x, y
 
+
 if __name__ == "__main__":
     print(read_points("./Beispiel_1.rtf"))
 
-    w = np.array([1,0])
+    w = np.array([1, 0])
     b = 0
     print(compute_line(w, b))
 
-    w = np.array([0,1])
+    w = np.array([0, 1])
     b = 1
     print(compute_line(w, b))
 
-    w = np.array([-1,1])
+    w = np.array([-1, 1])
     b = 0
     print(compute_line(w, b))
