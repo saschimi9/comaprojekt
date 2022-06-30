@@ -14,7 +14,7 @@ function calculate_params(alpha, l)
         prod1 = alpha[i]*Y[i]*X[i:i,:]
         w = w+prod1
     end
-    println(w)
+    # println(w)
 
     #Summe richtig mit der Indexierung? Und: Datentypen festlegen?
     b=0

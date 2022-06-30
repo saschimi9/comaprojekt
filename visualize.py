@@ -1,10 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from itertools import islice
 
 
 def read_points(filename: str):
     """Liest den Input einer Datei ein"""
     return np.loadtxt(filename, delimiter=" ")
+
+
+def read_svm(filename: str):
+    """Liest den Vektor und Offset der SVM ein."""
+    with file(str) as f:
+        w = np.genfromtxt(islice(f, 0))
+        b = np.genfromtxt(islice(f, 1))[0]
+    return w, b
 
 
 def plot_point_cloud(data, line_data):
