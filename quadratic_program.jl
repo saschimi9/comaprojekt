@@ -17,9 +17,11 @@ function quadratic_program(X::Matrix)
       M[i,j] *= y[i]*y[j]
     end
   end
-  #Ohne die sehr "kleine" draufaddierte Einheitsmatrix denkt QPDAS, dass M nicht pos definit ist (warum auch immer)
-  E = 0.001
+
+  #Ohne die sehr "kleine" draufaddierte Einheitsmatrix denkt QPDAS, dass M nicht pos definit ist
+  E = 0.00001
   M += E*Matrix{T}(I,k,k)
+
   #passt die einzugebenden Parameter an, um unsere gewuenschte Bedingungen zu realisieren
   A = zeros(k,k)
   for i in 1:k
@@ -28,18 +30,46 @@ function quadratic_program(X::Matrix)
   b = vec(zeros(T,k,1))
   C = -Matrix{T}(I,k,k)
   d = vec(zeros(T,k,1))
-  z = vec(ones(T,k,1))
+  z = vec(-ones(T,k,1))
   P = M
-  qp = QPDAS.QuadraticProgram(A,b,C,d,z,P)
 
+  #das Loeser wird ausgefuehrt
+  qp = QPDAS.QuadraticProgram(A,b,C,d,z,P)
   sol,val = solve!(qp)
-  println(sol,val)
+
+  #alle trivial kleine Zahlen werden zum 0 reduziert
+  for i in 1:k
+    if sol[i] < 10^-5
+      sol[i] = 0.0
+    end
+  end
+
+  return sol
 end
 
+#=
 X = [2.0 1.0 -1
 4.0 1.0 -1
 4.0 3.0 -1
 1.0 2.0 1
 1.0 4.0 1
 3.0 4.0 1]
-quadratic_program(X)
+
+Z = [2.0 2.0 -1
+4.0 2.0 -1
+4.0 4.0 -1
+1.0 3.0 1
+1.0 5.0 1
+3.0 5.0 1]
+
+Y = [3.0 1.0 1
+1.0 3.0 1
+4.0 4.0 -1
+6.0 4.0 -1
+4.0 6.0 -1]
+
+x = quadratic_program(X)
+y = quadratic_program(Y)
+z = quadratic_program(Z)
+
+=#
