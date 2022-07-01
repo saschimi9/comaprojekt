@@ -1,10 +1,9 @@
-using LinearAlgebra
 using DelimitedFiles
 
 @doc """
 Berechnet die Parameter w und b und gibt diese zurueck.
 """
-function calculate_params(alpha, l)
+function calculate_params(alpha::VT, l::MT) where {T, VT<:AbstractVector{T}, MT<:AbstractMatrix{T}}
     X=l[:,1:2]  #teilmatrix der Spalten 1-2
     Y=l[:,3]
     k=length(Y)
@@ -14,24 +13,17 @@ function calculate_params(alpha, l)
         prod1 = alpha[i]*Y[i]*X[i:i,:]
         w = w+prod1
     end
-    println(w)
 
-    #Summe richtig mit der Indexierung? Und: Datentypen festlegen?
+    A=[alpha l]     #schreibe Liste und alpha in selbe Matrix
+    A=[A[:,1] .>10^(-5), :]      #filtert nur alpha Werte >0 in erster Spalte.
+    l = length(A)
     b=0
-    summe =[0 0]
-    for i=1:k
-        if alpha[i]>10^-5
-            prod2=alpha[i]*Y[i]*X[i:i,:]
-            summe=summe+prod2
-        end
-    end
-    for i=1:k
-        if alpha[i]>10^-5
-            differenz=Y[i]- dot(summe,X[i:i,:])
-            b=b+differenz
-        end
-    end
-    b=b/2
+    for i=1:l
+        c=0
+        for j =1:l
+            c+=A[1,j]*A[4,j]*A[2:3,j]'*A[2:3,i]
+        b+=Y[i]-c
+    b=b/l
     return w, b
 end
 
@@ -45,8 +37,16 @@ function save_params_to_file(w, b, filename::String)
     writedlm(filename, param)
 end
 
+#Schreibe Testfälle: 
+#1) Randfall mit keiner Eingabe -> soll Fehlermeldung werfen
+#2) Fall mit falschem Format -> soll Fehlermeldung werfen (Julia-fkt die Dimension der Datentypen zusammenpasst)
+#2) Fälle mit einem, zwei und drei Punkten und dann von Hand ausrechnen!
+
+
+
 #a = [1; 2; 1; 4]
 #A = [1 2 1; 1 2 -1; 1 2 -1; 1 2 1]
+
 #calculate_params(a,A)
 
 #save_params_to_file([2 4], -20, "/Users/Hannah/Desktop/Coma_Python_Ha/Coma_II/Beispiel.txt")
