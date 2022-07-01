@@ -3,8 +3,9 @@ using Test
 
 @test calculate_params([1], [0 1 1])== ([0 1], 0)
 @test calculate_params([1; 1], [1 0 1; 0 1 -1])== ([1 -1], 0)
+@test calculate_params([-1; 1], [1 0 1; 0 1 -1]) ==([-1 -1],0)
 @test calculate_params([1; 1; 2], [0 0 1; 0 1 1; 1 0.5 -1])== ([-2 0], 1)
-@test calculate_params([1; 0; 1], [0 0 1; 0 1 1; 1 -1 -1])==([-1 1], 0.6666666666666666)
+@test calculate_params([1; 0; 1], [0 0 1; 0 1 1; 1 -1 -1])==([-1 1], 1)
 #@test calculate_params([1], [0 1 1; 0 1 1])== DomainError
 
 #Testfälle: 

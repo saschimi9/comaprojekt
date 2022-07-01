@@ -18,18 +18,22 @@ function calculate_params(alpha::Vector, l::Matrix)
         end
 
         A=[alpha l]     #schreibe Liste und alpha in selbe Matrix
-        l = size(A)[1]
+        s = size(A)[1]
+        counter=0       #Zähler für richtige size
         b=0
-        for i=1:l
+        for i=1:s
             c=0
-            for j =1:l
-                if A[j,1]>10^-5
-                    c+=A[j,1]*A[j,4]*A[j,2:3]'*A[i,2:3]
+            if A[i,1]>10^-5
+                for j =1:s
+                    if A[j,1]>10^-5
+                        c+=A[j,1]*A[j,4]*A[j,2:3]'*A[i,2:3]
+                    end
                 end
+                b+=Y[i]-c
+                counter+=1
             end
-            b+=Y[i]-c
         end
-        b=b/l
+        b=b/counter
         return w, b
     end
 end
@@ -41,6 +45,5 @@ function save_params_to_file(w, b, filename::String)
     param =[w, b]
     writedlm(filename, param)
 end
-
 
 #save_params_to_file([2 4], -20, "/Users/Hannah/Desktop/Coma_Python_Ha/Coma_II/Beispiel.txt")
