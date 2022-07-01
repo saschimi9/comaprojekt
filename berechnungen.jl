@@ -4,7 +4,7 @@ using DelimitedFiles
 Berechnet die Parameter w und b und gibt diese zurueck.
 """
 function calculate_params(alpha::VT, l::MT) where {T, VT<:AbstractVector{T}, MT<:AbstractMatrix{T}}
-    X=l[:,1:2]  #teilmatrix der Spalten 1-2
+    X=l[:,1:2]  #Teilmatrix der Spalten 1-2
     Y=l[:,3]
     k=length(Y)
     w = alpha[1]*Y[1]*X[1:1,:]
@@ -15,7 +15,7 @@ function calculate_params(alpha::VT, l::MT) where {T, VT<:AbstractVector{T}, MT<
     end
 
     A=[alpha l]     #schreibe Liste und alpha in selbe Matrix
-    A=[A[:,1] .>10^(-5), :]      #filtert nur alpha Werte >0 in erster Spalte.
+    A=[A[:,1] .>10^(-5), :]      #filtert nach alphawerten >0 in erster Spalte.
     l = length(A)
     b=0
     for i=1:l
@@ -27,7 +27,6 @@ function calculate_params(alpha::VT, l::MT) where {T, VT<:AbstractVector{T}, MT<
     return w, b
 end
 
-#Fragen: passt das Format der .txt Datei?
 #- filename =problem_{i}_param.txt`
 @doc """
 Speichert die Parameter w und b als .txt Datei.
