@@ -37,13 +37,6 @@ function quadratic_program(X::Matrix)
   qp = QPDAS.QuadraticProgram(A,b,C,d,z,P)
   sol,val = solve!(qp)
 
-  #alle trivial kleine Zahlen werden zum 0 reduziert
-  for i in 1:k
-    if sol[i] < 10^-5
-      sol[i] = 0.0
-    end
-  end
-
   return sol
 end
 
