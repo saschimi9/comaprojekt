@@ -1,7 +1,5 @@
-import readline
 import numpy as np
 import matplotlib.pyplot as plt
-from itertools import islice
 
 
 def read_points(filename: str):
@@ -32,7 +30,6 @@ def plot_point_cloud(data, line_data):
     plt.legend(['Data', 'Separator'])
     plt.show()
 
-
 def compute_line(w, b):
     """Bestimmt fuer eine gegeben Geradengleichung zwei Punkte, um die Gerade darstellen zu koennen."""
     if w[0] != 0 and w[1] != 0:
@@ -48,21 +45,18 @@ def compute_line(w, b):
         raise Exception("Zero vector!")
     return x, y
 
+def create_plots():
+
+    filename = "Beispiel_2.txt"
+    w, b = read_svm(f"./params_{filename}")
+    print(w, b)
+    line_data = compute_line(w, b)
+    data = read_points(f"./{filename}")
+    plot_point_cloud(data, line_data)
 
 if __name__ == "__main__":
-    # print(read_points("./Beispiel_1.txt"))
-
-    # w = np.array([1, 0])
-    # b = 0
-    # print(compute_line(w, b))
-
-    # w = np.array([0, 1])
-    # b = 1
-    # print(compute_line(w, b))
-
-    # w = np.array([-1, 1])
-    # b = 0
-    # print(compute_line(w, b))
-
-    filename = "./params_Beispiel_2.txt"
-    read_svm(filename)
+    import sys
+    if len(sys.argv) < 1:
+        raise Error("No file name passed!")
+    create_plots()
+    plt.savefig(sys.argv[1])
