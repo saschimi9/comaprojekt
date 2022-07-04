@@ -27,15 +27,15 @@ function quadratic_program(X::Matrix)
     end
 
     #Ohne die sehr "kleine" draufaddierte Einheitsmatrix denkt QPDAS, dass M nicht pos definit ist
-    E = 0.00001
+    E = 0.000001
     M += E*Matrix{T}(I,k,k)
 
     #passt die einzugebenden Parameter an, um unsere gewuenschte Bedingungen zu realisieren
-    A = zeros(k,k)
-    for i in 1:k
-      A[i,:] = y
-    end
-    b = vec(zeros(T,k,1))
+    A = zeros(1,k)
+      for i in 1:k
+        A[i] = y[i]
+      end
+    b = vec(zeros(1,1))
     C = -Matrix{T}(I,k,k)
     d = vec(zeros(T,k,1))
     z = vec(-ones(T,k,1))
