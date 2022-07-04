@@ -1,3 +1,4 @@
+import readline
 import numpy as np
 import matplotlib.pyplot as plt
 from itertools import islice
@@ -10,9 +11,9 @@ def read_points(filename: str):
 
 def read_svm(filename: str):
     """Liest den Vektor und Offset der SVM ein."""
-    with file(str) as f:
-        w = np.genfromtxt(islice(f, 0))
-        b = np.genfromtxt(islice(f, 1))[0]
+    with open(filename) as f:
+        w = np.array(np.mat(f.readline())).flatten()
+        b = float(f.readline().strip())
     return w, b
 
 
@@ -36,29 +37,32 @@ def compute_line(w, b):
     """Bestimmt fuer eine gegeben Geradengleichung zwei Punkte, um die Gerade darstellen zu koennen."""
     if w[0] != 0 and w[1] != 0:
         x = np.linspace(0, 5, 2)
-        y = (b - w[0]*x)/w[1]
+        y = (-b - w[0]*x)/w[1]
     elif w[0] != 0:
         y = np.linspace(0, 5, 2)
-        x = (b - w[1]*y)/w[0]
+        x = (-b - w[1]*y)/w[0]
     elif w[1] != 0:
         x = np.linspace(0, 5, 2)
-        y = (b - w[0]*x)/w[1]
+        y = (-b - w[0]*x)/w[1]
     else:
         raise Exception("Zero vector!")
     return x, y
 
 
 if __name__ == "__main__":
-    print(read_points("./Beispiel_1.rtf"))
+    # print(read_points("./Beispiel_1.txt"))
 
-    w = np.array([1, 0])
-    b = 0
-    print(compute_line(w, b))
+    # w = np.array([1, 0])
+    # b = 0
+    # print(compute_line(w, b))
 
-    w = np.array([0, 1])
-    b = 1
-    print(compute_line(w, b))
+    # w = np.array([0, 1])
+    # b = 1
+    # print(compute_line(w, b))
 
-    w = np.array([-1, 1])
-    b = 0
-    print(compute_line(w, b))
+    # w = np.array([-1, 1])
+    # b = 0
+    # print(compute_line(w, b))
+
+    filename = "./params_Beispiel_2.txt"
+    read_svm(filename)
