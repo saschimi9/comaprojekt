@@ -1,4 +1,2 @@
 matplotlib
-jupyter
 numpy
-ipython
