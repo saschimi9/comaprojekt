@@ -1,3 +1,4 @@
+#!/bin/python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -9,10 +10,13 @@ def read_points(filename: str):
 
 def read_svm(filename: str):
     """Liest den Vektor und Offset der SVM ein."""
-    with open(filename) as f:
-        w = np.array(np.mat(f.readline())).flatten()
-        b = float(f.readline().strip())
-    return w, b
+    try:
+        with open(filename) as f:
+            w = np.array(np.mat(f.readline())).flatten()
+            b = float(f.readline().strip())
+        return w, b
+    except FileNotFoundError:
+        print("Seems like the params file does not exist!")
 
 
 def plot_point_cloud(data, line_data):
@@ -30,6 +34,7 @@ def plot_point_cloud(data, line_data):
     plt.legend(['Data', 'Separator'])
     plt.show()
 
+
 def compute_line(w, b):
     """Bestimmt fuer eine gegeben Geradengleichung zwei Punkte, um die Gerade darstellen zu koennen."""
     if w[0] != 0 and w[1] != 0:
@@ -45,18 +50,19 @@ def compute_line(w, b):
         raise Exception("Zero vector!")
     return x, y
 
-def create_plots():
 
-    filename = "Beispiel_2.txt"
+def create_plots(filename: str):
+    """Erstelle den Vektor der SVM und plotte die Punktwolke und die trennende Gerade."""
     w, b = read_svm(f"./params_{filename}")
-    print(w, b)
     line_data = compute_line(w, b)
     data = read_points(f"./{filename}")
     plot_point_cloud(data, line_data)
 
+
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 1:
-        raise Error("No file name passed!")
-    create_plots()
-    plt.savefig(sys.argv[1])
+        raise Exception("No file name passed!")
+    filename = sys.argv[1]
+    create_plots(filename)
+    plt.savefig("plot_" + filename.split('.')[0] + ".png")
