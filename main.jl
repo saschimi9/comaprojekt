@@ -15,4 +15,8 @@ w, b = calculate_params(α, X)
 save_params_to_file(w, b, params_filename)
 
 # Call to Python
-run(`$dir.venv/bin/python visualize.py $filename`)
+if Sys.iswindows()
+  run(`python visualize.py $filename`)
+else
+  run(`$dir.venv/bin/python visualize.py $filename`)
+end
