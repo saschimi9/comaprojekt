@@ -8,4 +8,4 @@ function read_points(filename::String)
     return data
 end
 
-#data=readdlm("/Users/Hannah/Desktop/Coma_Python_Ha/Coma_II/Beispiel.txt")
+
