@@ -34,16 +34,23 @@ def plot_point_cloud(data, line_data):
     plt.legend(['Data', 'Separator'])
 
 
-def compute_line(w, b):
+def compute_line(w, b, data):
     """Bestimmt fuer eine gegeben Geradengleichung zwei Punkte, um die Gerade darstellen zu koennen."""
+    min_x = min(data[:,0])
+    min_y = min(data[:,1])
+    max_x = max(data[:,0])
+    max_y = max(data[:,1])
+    minv = min(min_x, min_y)
+    maxv = max(max_x, max_y)
+
     if w[0] != 0 and w[1] != 0:
-        x = np.linspace(0, 5, 2)
+        x = np.linspace(minv, maxv, 2)
         y = (-b - w[0]*x)/w[1]
     elif w[0] != 0:
-        y = np.linspace(0, 5, 2)
+        y = np.linspace(minv, maxv, 2)
         x = (-b - w[1]*y)/w[0]
     elif w[1] != 0:
-        x = np.linspace(0, 5, 2)
+        x = np.linspace(minv, maxv, 2)
         y = (-b - w[0]*x)/w[1]
     else:
         raise Exception("Zero vector!")
@@ -53,8 +60,8 @@ def compute_line(w, b):
 def create_plots(filename: str):
     """Erstelle den Vektor der SVM und plotte die Punktwolke und die trennende Gerade."""
     w, b = read_svm(f"./params_{filename}")
-    line_data = compute_line(w, b)
     data = read_points(f"./{filename}")
+    line_data = compute_line(w, b, data)
     plot_point_cloud(data, line_data)
 
 
