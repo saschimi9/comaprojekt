@@ -7,5 +7,3 @@ function read_points(filename::String)
     data=readdlm(filename)
     return data
 end
-
-

@@ -4,7 +4,6 @@ using QPDAS
 @doc """
 Berechnet M und wendet den Löser QuadraticProgram auf M an und gibt die Alphas zurueck
 """
-
 function quadratic_program(X::Matrix)
   if size(X)[2] != 3
     throw(error("falsche Anzahl an Spalten in Matrix"))
@@ -26,11 +25,11 @@ function quadratic_program(X::Matrix)
       end
     end
 
-    #Ohne die sehr "kleine" draufaddierte Einheitsmatrix denkt QPDAS, dass M nicht pos definit ist
+    # Regularisieren
     E = 0.000001
     M += E*Matrix{T}(I,k,k)
 
-    #passt die einzugebenden Parameter an, um unsere gewuenschte Bedingungen zu realisieren
+    # Passt die einzugebenden Parameter an, um unsere gewuenschte Bedingungen zu realisieren
     A = zeros(1,k)
       for i in 1:k
         A[i] = y[i]
@@ -41,7 +40,7 @@ function quadratic_program(X::Matrix)
     z = vec(-ones(T,k,1))
     P = M
 
-    #das Loeser wird ausgefuehrt
+    # Loeser aufrufen
     qp = QPDAS.QuadraticProgram(A,b,C,d,z,P)
     sol,val = solve!(qp)
 

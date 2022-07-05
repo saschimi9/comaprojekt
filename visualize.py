@@ -32,7 +32,6 @@ def plot_point_cloud(data, line_data):
     plt.xlabel('$x_1$')
     plt.ylabel('$x_2$')
     plt.legend(['Data', 'Separator'])
-    plt.show()
 
 
 def compute_line(w, b):
