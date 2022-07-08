@@ -9,10 +9,15 @@ dir = @__DIR__
 filename = ARGS[1]
 params_filename = "params_" * filename
 X = read_points(dir*"/"*filename)
-α = quadratic_program(X)
-w, b = calculate_params(α, X)
-save_params_to_file(w, b, params_filename)
-
+try
+  α = quadratic_program(X)
+  w, b = calculate_params(α, X)
+  save_params_to_file(w, b, params_filename)
+catch LoadError
+  println("Did not converge!")
+  w, b = calculate_params([1], [1 1 1]) # just some example values
+  save_params_to_file(w, b, params_filename)
+end
 # Call to Python
 if Sys.iswindows()
   run(`python visualize.py $filename`)
