@@ -6,6 +6,6 @@ Our implementation of the SVM task for "Computerorientierte Mathematik II" @TU B
 
 If you would like to create a separate environment which you can run this project in, use `python -m venv ./venv`
 to create an environment `venv`.
-Activate that environment using `source /venv/bin/activate`.
+On Mac OS, activate that environment using `source /venv/bin/activate`. On Windows, use `.\venv\Scripts\activate`.
 Make sure to install the Python packages in `requirements.txt` within your environment by using
 `pip install -r requirements.txt`.
